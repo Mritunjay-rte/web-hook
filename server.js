@@ -43,6 +43,20 @@ app.post('/api/*', async (req, res) => {
 });
 
 
+app.get('/api/read-db-data', async (req, res) => {
+    try {
+        const dbResponse  = await ApiResponse.find({})
+        if(dbResponse){
+            return res.json({status : "success", data :dbResponse})
+        }
+        return res.json({status : "failure", data :[]})
+    } catch (error) {
+        console.error('Error fetching and storing data:', error);
+        res.status(500).send('Error fetching and storing data');
+    }
+});
+
+
 // Start the server
 const PORT = process.env.PORT || 5200;
 app.listen(PORT, () => console.log(`Webhook server running on port ${PORT}`));
